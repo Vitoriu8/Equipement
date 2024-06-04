@@ -40,6 +40,11 @@ class Pipeline:
         with open('body_content.json', 'w') as f:
             json.dump(body, f, indent=4)
 
+        # Сохранение данных пользователя в файл
+        if user:
+            with open('user_content.json', 'w') as f:
+                json.dump(user, f, indent=4)
+
         # Добавляем содержимое body в messages
         messages = body.get("messages", [])
         messages.append({
@@ -55,19 +60,3 @@ class Pipeline:
                 )
 
         return body
-
-# Тестирование кода
-if __name__ == "__main__":
-    import asyncio
-
-    pipeline = Pipeline()
-
-    test_body = {
-        "messages": [
-            {"role": "user", "content": "Hello"},
-            {"role": "user", "content": "How are you?"},
-        ]
-    }
-    test_user = {"id": "test_user", "role": "user"}
-
-    asyncio.run(pipeline.inlet(test_body, test_user))
